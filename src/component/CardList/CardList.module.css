@@ -1,0 +1,21 @@
+.Container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap:  37px;
+}
+
+.Wrapper {
+  transition: transform 0.4s ease-in;
+}
+
+.Wrapper:hover {
+  transform: scale(1.2);
+}
+
+.Img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  cursor: pointer;
+}

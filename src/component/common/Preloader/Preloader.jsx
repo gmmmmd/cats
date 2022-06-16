@@ -1,12 +1,12 @@
 import React from 'react';
 import preloader from './../../../assets/images/preloader.svg';
-import './../../../index.css';
+import styles from './Preloader.module.css';
 
-const Preloader = (props) => {
+const Preloader = ({children}) => {
   return (
-    <div className='Preloader'>
+    <div className={styles.Wrapper}>
       <img src={preloader} alt="preloader" />
-      <span>Загружаю котиков...</span>
+      <span>{children}</span>
     </div>    
   );
 };

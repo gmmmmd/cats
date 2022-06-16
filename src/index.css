@@ -26,6 +26,10 @@ header {
   justify-content: space-evenly;
 }
 
+.main {
+  padding: 40px 0;
+}
+
 .container {
   max-width: 1400px;
   width: 100%;
