@@ -6,6 +6,7 @@
 }
 
 .Wrapper {
+  position: relative;
   transition: transform 0.4s ease-in;
 }
 
@@ -18,4 +19,11 @@
   height: 250px;
   object-fit: cover;
   cursor: pointer;
+}
+
+.ButtonBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: 50%;
 }

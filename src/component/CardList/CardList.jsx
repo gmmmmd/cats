@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './CardList.module.css';
 import Preloader from '../common/Preloader/Preloader';
 
-const CardList = ({cats, isLoading, addToFavorites}) => {
+const CardList = ({cats, addToFavorites, removeToFavorites}) => {
 
-  const Card = ({ cats, addToFavorites }) => {
+  const Card = ({ cats, addToFavorites, removeToFavorites }) => {
     return (
       <div className={styles.Wrapper}>
         <img className={styles.Img} key={cats.key} src={cats.url} alt="cats" />
-        <div>
-          <button onClick={() => addToFavorites(cats)}>add</button>
+        <div className={styles.ButtonBox}>
+          { addToFavorites ? <button onClick={() => addToFavorites(cats)}>add</button> : null }
+          { removeToFavorites ? <button onClick={() => removeToFavorites(cats)}>del</button> : null }
         </div>
       </div>
     );
@@ -17,14 +18,13 @@ const CardList = ({cats, isLoading, addToFavorites}) => {
 
   const allCats = cats.map((i) => {
     return (
-      <Card cats={i} key={i.id} addToFavorites={addToFavorites} />
+      <Card cats={i} key={i.id} addToFavorites={addToFavorites} removeToFavorites={removeToFavorites} />
     );
   })
 
   return (
     <div className={styles.Container}>
       {allCats}
-      {/* {!isLoading && <Preloader>Загружаю еще больше котиков...</Preloader>} */}
     </div>
 
   );

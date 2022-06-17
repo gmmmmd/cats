@@ -66,24 +66,25 @@ function App() {
     }
   }, []);
 
-  // add like
-  const addToFavorites = (cats) => {
-    const newFavoritesList = [...favorites, cats];
-    setFavorites(newFavoritesList);
-    saveToLocalStorage(newFavoritesList);
-    console.log(newFavoritesList)
-  }
+    // add like
+    const addToFavorites = (cats) => {
+      const newFavoritesList = [...favorites, cats];
+      setFavorites(newFavoritesList);
+      saveToLocalStorage(newFavoritesList);
+      console.log(newFavoritesList)
+    }
+  
+    const saveToLocalStorage = (items) => {
+      localStorage.setItem('favorites-cats', JSON.stringify(items));
+    }
+  
+    // remove like
+    const removeToFavorites = (cats) => {
+      const newFavoritesList = favorites.filter(el => el.id !== cats.id);
+      setFavorites(newFavoritesList);
+      saveToLocalStorage(newFavoritesList);
+    }
 
-  const saveToLocalStorage = (items) => {
-    localStorage.setItem('favorites-cats', JSON.stringify(items));
-  }
-
-  // remove like
-  const removeToFavorites = (cats) => {
-    const newFavoritesList = favorites.filter(el => el.id !== cats.id);
-    setFavorites(newFavoritesList);
-    saveToLocalStorage(newFavoritesList);
-  }
 
   return (
     <>
@@ -94,8 +95,9 @@ function App() {
             fetching={fetching}
             isLoading={isLoading}
             addToFavorites={addToFavorites}
+            removeToFavorites={removeToFavorites}
           />} />
-          <Route path="/favorit-cats" element={<Favoritpage isLoading={isLoading} />} />
+          <Route path="/favorit-cats" element={<Favoritpage isLoading={isLoading} removeToFavorites={removeToFavorites} />} />
           <Route path="*" element={<Notfoundpage />} />
         </Route>
       </Routes>
