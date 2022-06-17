@@ -1,16 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './CardList.module.css';
-import Preloader from '../common/Preloader/Preloader';
 
-const CardList = ({cats, addToFavorites, removeToFavorites}) => {
+const CardList = ({cats}) => {
+  const [checked, setChecked] = useState(false)
+  const [favorites, setFavorites] = useState([])
+    // add like
+  const addToFavorites = (cats) => {
 
-  const Card = ({ cats, addToFavorites, removeToFavorites }) => {
+    if (!checked) {
+    const newFavoritesList = [...favorites, cats];
+    setFavorites(newFavoritesList);
+    saveToLocalStorage(newFavoritesList);
+    setChecked(true)
+    console.log('checked')
+    } else {
+    const newFavoritesList = favorites.filter(el => el.id !== cats.id);
+    setFavorites(newFavoritesList);
+    saveToLocalStorage(newFavoritesList);
+    setChecked(false)
+    console.log('unchecked')
+    }
+  }
+
+  const saveToLocalStorage = (items) => {
+    localStorage.setItem('favorites-cats', JSON.stringify(items));
+  }
+
+  // useEffect(() => {
+  //   const catsFavorites = JSON.parse(
+  //     localStorage.getItem('favorites-cats')
+  //   );
+  //   if (catsFavorites) {
+  //     setFavorites(catsFavorites);
+  //   }
+  // }, []);
+
+
+  const Card = ({ cats, addToFavorites }) => {
+
     return (
       <div className={styles.Wrapper}>
         <img className={styles.Img} key={cats.key} src={cats.url} alt="cats" />
         <div className={styles.ButtonBox}>
-          { addToFavorites ? <button onClick={() => addToFavorites(cats)}>add</button> : null }
-          { removeToFavorites ? <button onClick={() => removeToFavorites(cats)}>del</button> : null }
+          
+          <input id="toggle-heart" type="checkbox" className={styles.InputHeart} />
+          <label
+            htmlFor="toggle-heart"
+            className={styles.LabelHeart}
+            // className={`${styles.LabelHeart} ${(checked ? `${styles.active}` : null)}`}
+            onClick={() => addToFavorites(cats)}
+          >
+            ❤
+          </label>
         </div>
       </div>
     );
@@ -18,7 +59,7 @@ const CardList = ({cats, addToFavorites, removeToFavorites}) => {
 
   const allCats = cats.map((i) => {
     return (
-      <Card cats={i} key={i.id} addToFavorites={addToFavorites} removeToFavorites={removeToFavorites} />
+    <Card cats={i} key={i.id} addToFavorites={addToFavorites} />
     );
   })
 

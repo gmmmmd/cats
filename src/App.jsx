@@ -11,7 +11,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [fetching, setFetching] = useState(true);
-  const [favorites, setFavorites] = useState([]);
 
   // Запрос котиков
   useEffect(() => {
@@ -57,34 +56,15 @@ function App() {
   }, [setFetching])
 
   // Подгрузка localStorage при первой загрузке
-  useEffect(() => {
-    const catsFavorites = JSON.parse(
-      localStorage.getItem('favorites-cats')
-    );
-    if (catsFavorites) {
-      setFavorites(catsFavorites);
-    }
-  }, []);
-
-    // add like
-    const addToFavorites = (cats) => {
-      const newFavoritesList = [...favorites, cats];
-      setFavorites(newFavoritesList);
-      saveToLocalStorage(newFavoritesList);
-      console.log(newFavoritesList)
-    }
   
-    const saveToLocalStorage = (items) => {
-      localStorage.setItem('favorites-cats', JSON.stringify(items));
-    }
-  
-    // remove like
-    const removeToFavorites = (cats) => {
-      const newFavoritesList = favorites.filter(el => el.id !== cats.id);
-      setFavorites(newFavoritesList);
-      saveToLocalStorage(newFavoritesList);
-    }
-
+  // useEffect(() => {
+  //   const catsFavorites = JSON.parse(
+  //     localStorage.getItem('favorites-cats')
+  //   );
+  //   if (catsFavorites) {
+  //     setFavorites(catsFavorites);
+  //   }
+  // }, []);
 
   return (
     <>
@@ -94,10 +74,8 @@ function App() {
             cats={cats}
             fetching={fetching}
             isLoading={isLoading}
-            addToFavorites={addToFavorites}
-            removeToFavorites={removeToFavorites}
           />} />
-          <Route path="/favorit-cats" element={<Favoritpage isLoading={isLoading} removeToFavorites={removeToFavorites} />} />
+          <Route path="/favorit-cats" element={<Favoritpage isLoading={isLoading} />} />
           <Route path="*" element={<Notfoundpage />} />
         </Route>
       </Routes>
