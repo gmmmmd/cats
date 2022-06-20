@@ -11,7 +11,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [fetching, setFetching] = useState(true);
-  const [favorites, setFavorites] = useState([])
+  const [favorites, setFavorites] = useState([]);
+  const [checked, setChecked] = useState([false]);
 
   // Запрос котиков
   useEffect(() => {
@@ -41,7 +42,7 @@ function App() {
       }
       fetchData()
     }
-  }, [fetching, cats, currentPage])
+  }, [fetching, cats, currentPage]);
 
   // Подгрузка котиков при скролле
   useEffect(() => {
@@ -54,7 +55,37 @@ function App() {
     return () => {
       document.removeEventListener('scroll', scrollHandler)
     }
-  }, [setFetching])
+  }, [setFetching]);
+
+  useEffect(() => {
+    const catsFavorites = JSON.parse(
+      localStorage.getItem('favorites-cats')
+    );
+    if (catsFavorites) {
+      setFavorites(catsFavorites);
+    }
+  }, []);
+
+  // add like
+  const addToFavorites = (cats) => {
+    if (!checked) {
+      const newFavoritesList = [...favorites, cats];
+      setFavorites(newFavoritesList);
+      saveToLocalStorage(newFavoritesList);
+      setChecked(true)
+      console.log('checked')
+    } else {
+      const newFavoritesList = favorites.filter(el => el.id !== cats.id);
+      setFavorites(newFavoritesList);
+      saveToLocalStorage(newFavoritesList);
+      setChecked(false)
+      console.log('unchecked')
+    }
+  }
+
+  const saveToLocalStorage = (items) => {
+    localStorage.setItem('favorites-cats', JSON.stringify(items));
+  }
 
   return (
     <>
@@ -64,8 +95,13 @@ function App() {
             cats={cats}
             fetching={fetching}
             isLoading={isLoading}
+            addToFavorites={addToFavorites}
+            checked={checked}
           />} />
-          <Route path="/favorit-cats" element={<Favoritpage isLoading={isLoading} />} />
+          <Route path="/favorit-cats" element={<Favoritpage
+            addToFavorites={addToFavorites}
+            checked={checked}
+          />} />
           <Route path="*" element={<Notfoundpage />} />
         </Route>
       </Routes>
