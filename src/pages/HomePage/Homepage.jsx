@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React from 'react';
 import CardList from './../../component/CardList/CardList';
 import Preloader from './../../component/common/Preloader/Preloader';
 

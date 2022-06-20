@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
 const setActive = ({isActive}) => isActive ? 'Link Link-active' : 'Link'
 
 const Layout = () => {
-
   return (
     <>
       <header className="container">
