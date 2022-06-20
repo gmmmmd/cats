@@ -90,7 +90,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/cats/" element={<Layout />}>
           <Route index element={<Homepage
             cats={cats}
             fetching={fetching}
@@ -98,7 +98,7 @@ function App() {
             addToFavorites={addToFavorites}
             checked={checked}
           />} />
-          <Route path="/favorit-cats" element={<Favoritpage
+          <Route path="/cats/favorit-cats" element={<Favoritpage
             addToFavorites={addToFavorites}
             checked={checked}
           />} />
