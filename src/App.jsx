@@ -11,6 +11,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [fetching, setFetching] = useState(true);
+  const [favorites, setFavorites] = useState([])
 
   // Запрос котиков
   useEffect(() => {
@@ -54,17 +55,6 @@ function App() {
       document.removeEventListener('scroll', scrollHandler)
     }
   }, [setFetching])
-
-  // Подгрузка localStorage при первой загрузке
-  
-  // useEffect(() => {
-  //   const catsFavorites = JSON.parse(
-  //     localStorage.getItem('favorites-cats')
-  //   );
-  //   if (catsFavorites) {
-  //     setFavorites(catsFavorites);
-  //   }
-  // }, []);
 
   return (
     <>

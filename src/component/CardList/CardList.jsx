@@ -1,30 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './CardList.module.css';
 
-const CardList = ({cats}) => {
-  const [checked, setChecked] = useState(false)
-  const [favorites, setFavorites] = useState([])
-    // add like
-  const addToFavorites = (cats) => {
+const CardList = ({ cats }) => {
 
-    if (!checked) {
-    const newFavoritesList = [...favorites, cats];
-    setFavorites(newFavoritesList);
-    saveToLocalStorage(newFavoritesList);
-    setChecked(true)
-    console.log('checked')
-    } else {
-    const newFavoritesList = favorites.filter(el => el.id !== cats.id);
-    setFavorites(newFavoritesList);
-    saveToLocalStorage(newFavoritesList);
-    setChecked(false)
-    console.log('unchecked')
-    }
-  }
-
-  const saveToLocalStorage = (items) => {
-    localStorage.setItem('favorites-cats', JSON.stringify(items));
-  }
 
   // useEffect(() => {
   //   const catsFavorites = JSON.parse(
@@ -36,22 +14,41 @@ const CardList = ({cats}) => {
   // }, []);
 
 
-  const Card = ({ cats, addToFavorites }) => {
+  const Card = ({ cats }) => {
+    const [checked, setChecked] = useState(false);
+    const [favorites, setFavorites] = useState([]);
+
+    // add like
+    const addToFavorites = (cats) => {
+      if (!checked) {
+        const newFavoritesList = [...favorites, cats];
+        setFavorites(newFavoritesList);
+        saveToLocalStorage(newFavoritesList);
+        setChecked(true)
+        console.log('checked')
+      } else {
+        const newFavoritesList = favorites.filter(el => el.id !== cats.id);
+        setFavorites(newFavoritesList);
+        saveToLocalStorage(newFavoritesList);
+        setChecked(false)
+        console.log('unchecked')
+      }
+    }
+
+    const saveToLocalStorage = (items) => {
+      localStorage.setItem('favorites-cats', JSON.stringify(items));
+    }
 
     return (
       <div className={styles.Wrapper}>
         <img className={styles.Img} key={cats.key} src={cats.url} alt="cats" />
         <div className={styles.ButtonBox}>
-          
-          <input id="toggle-heart" type="checkbox" className={styles.InputHeart} />
-          <label
-            htmlFor="toggle-heart"
-            className={styles.LabelHeart}
-            // className={`${styles.LabelHeart} ${(checked ? `${styles.active}` : null)}`}
+          <button
+            className={`${styles.Button} ${(checked ? `${styles.add}` : '')}`}
             onClick={() => addToFavorites(cats)}
           >
             ❤
-          </label>
+          </button>
         </div>
       </div>
     );
@@ -59,7 +56,7 @@ const CardList = ({cats}) => {
 
   const allCats = cats.map((i) => {
     return (
-    <Card cats={i} key={i.id} addToFavorites={addToFavorites} />
+      <Card cats={i} key={i.id} />
     );
   })
 

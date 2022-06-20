@@ -44,3 +44,27 @@
 .active {
   color: red;
 }
+
+button {
+  background: transparent;
+  border: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+.Button {
+  font-size: 50px;
+  color: #aab8c2;
+  opacity: 0.2;
+}
+
+.Button:hover {
+  opacity: 0.8;
+}
+
+.add {
+  color: red;
+}
